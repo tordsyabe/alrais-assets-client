@@ -1,25 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+
+import { ThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { Container } from "@material-ui/core";
+
+import { getAssets } from "./services/AssetService";
+import Routes from "./Routes";
+
+import { theme } from "./theme";
 
 function App() {
+  const [assets, setAssets] = useState([]);
+
+  useEffect(() => {
+    getAssets()
+      .then((response) => {
+        response.data.forEach((asset) => {
+          setAssets(asset);
+        });
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+
+      <Container>
+        <Routes />
+      </Container>
+    </ThemeProvider>
   );
 }
 
