@@ -1,13 +1,6 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
-import {
-  Paper,
-  makeStyles,
-  Typography,
-  Button,
-  Select,
-  MenuItem,
-} from "@material-ui/core";
+import { Formik, Form } from "formik";
+import { Paper, makeStyles, Typography, Button } from "@material-ui/core";
 import FormikTextField from "../formik-material-ui/FormikTextField";
 
 import { assetValidationSchema } from "./../../utils/ValidationSchema";
@@ -130,7 +123,7 @@ export default function AssetForm() {
 
             <pre>{JSON.stringify(values, null, 2)}</pre>
             <Button
-              disabled={!dirty || !isValid}
+              disabled={!isValid || !dirty}
               type='submit'
               color='secondary'
               variant='contained'

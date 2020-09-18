@@ -1,13 +1,20 @@
 import React, { useState, useEffect, Fragment } from "react";
 import axios from "axios";
-import { Typography, Paper, makeStyles } from "@material-ui/core";
+import { Typography, Paper, makeStyles, Grid, Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
-    padding: "1em",
-    margin: "1em auto",
+    padding: theme.spacing(3),
+    margin: theme.spacing(3),
+    "& .MuiTypography-root": {
+      marginBottom: theme.spacing(3),
+    },
   },
-});
+  something: {
+    flexGrow: 1,
+  },
+}));
 
 const AssetsPage = () => {
   const [assets, setAssets] = useState([]);
@@ -27,10 +34,22 @@ const AssetsPage = () => {
 
   return (
     <Fragment>
-      <Typography variant='h4' m={5}>
-        ASSETS PAGE
-      </Typography>
       <Paper square className={classes.root}>
+        <Grid container>
+          <Grid item className={classes.something}>
+            <Typography variant='h4' m={5}>
+              ASSET LISTS
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Link to='/assets/new'>
+              <Button color='primary' variant='contained'>
+                Add new asset
+              </Button>
+            </Link>
+          </Grid>
+        </Grid>
+
         {assets.map((asset) => (
           <div key={asset.uuid}>{asset.assetTag}</div>
         ))}
