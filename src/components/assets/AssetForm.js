@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Formik, Form } from "formik";
-import { Paper, makeStyles, Typography, Button } from "@material-ui/core";
+import { Formik, Form, Field } from "formik";
+import {
+  Paper,
+  makeStyles,
+  Typography,
+  Button,
+  Grid,
+  Select,
+} from "@material-ui/core";
 import FormikTextField from "../formik-material-ui/FormikTextField";
 
 import { assetValidationSchema } from "./../../utils/ValidationSchema";
@@ -68,7 +75,6 @@ export default function AssetForm() {
               variant='outlined'
               size='small'
               fullWidth
-              required
             />
 
             <FormikTextField
@@ -77,7 +83,6 @@ export default function AssetForm() {
               size='small'
               label='Serial'
               fullWidth
-              required
             />
 
             <FormikTextField
@@ -87,31 +92,37 @@ export default function AssetForm() {
               label='Asset Name'
               fullWidth
             />
-
-            <FormikTextField
-              name='purchaseDate'
-              variant='outlined'
-              label='Purchase Date'
-              type='date'
-              size='small'
-              fullWidth
-            />
-            <FormikTextField
-              name='purchaseNumber'
-              variant='outlined'
-              size='small'
-              label='Purchase Number'
-              fullWidth
-            />
-
-            <FormikTextField
-              name='purchaseCost'
-              type='text'
-              variant='outlined'
-              size='small'
-              label='Purchase Cost'
-              fullWidth
-            />
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={12} md={4}>
+                <FormikTextField
+                  name='purchaseDate'
+                  variant='outlined'
+                  label='Purchase Date'
+                  type='date'
+                  size='small'
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={4}>
+                <FormikTextField
+                  name='purchaseNumber'
+                  variant='outlined'
+                  size='small'
+                  label='Purchase Number'
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={4}>
+                <FormikTextField
+                  name='purchaseCost'
+                  type='text'
+                  variant='outlined'
+                  size='small'
+                  label='Purchase Cost'
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
 
             <FormikTextField
               name='warranty'
@@ -130,6 +141,8 @@ export default function AssetForm() {
               label='Notes'
               fullWidth
             />
+
+            <Field name='locationId' as={Select} type='select'></Field>
 
             <pre>{JSON.stringify(values, null, 2)}</pre>
             <Button
