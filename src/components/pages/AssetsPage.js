@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
-import axios from "axios";
 import { Typography, Paper, makeStyles, Grid, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { getAssets } from "../../services/AssetService";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,14 +22,9 @@ const AssetsPage = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/v1/assets")
-      .then((response) => {
-        setAssets(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    getAssets().then((response) => {
+      setAssets(response.data);
+    });
   }, []);
 
   return (

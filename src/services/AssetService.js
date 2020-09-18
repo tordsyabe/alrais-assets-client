@@ -1,9 +1,10 @@
 import Axios from "axios";
+import { API_URL } from "../utils/constants";
 
 export const getAssets = () => {
-  return Axios.get("http://localhost:5000/api/v1/assets");
+  return Axios.get(API_URL + "/assets");
 };
 
 export const addAsset = (asset) => {
-  return Axios.post("http://localhost:5000/api/v1/assets", asset);
+  return Axios.post(API_URL + "/assets", asset);
 };

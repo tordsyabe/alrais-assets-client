@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import { Paper, makeStyles, Typography, Button } from "@material-ui/core";
 import FormikTextField from "../formik-material-ui/FormikTextField";
 
 import { assetValidationSchema } from "./../../utils/ValidationSchema";
+import { getLocations } from "../../services/LocationService";
 
 const initialValues = {
   name: "",
@@ -35,6 +36,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AssetForm() {
   const classes = useStyles();
+
+  const [locations, setLocations] = useState([]);
+
+  useEffect(() => {
+    getLocations().then((response) => {
+      setLocations(response);
+      console.log(response);
+    });
+  }, []);
 
   return (
     <Paper square className={classes.root}>
