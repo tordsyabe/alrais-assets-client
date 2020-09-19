@@ -9,6 +9,8 @@ import { assetValidationSchema } from "./../../utils/ValidationSchema";
 import { getLocations } from "../../services/LocationService";
 import { getStatus } from "../../services/StatusService";
 import { getModels } from "../../services/ModelService";
+import { addAsset } from "../../services/AssetService";
+import { Redirect, useHistory } from "react-router-dom";
 
 const initialValues = {
   name: "",
@@ -45,6 +47,8 @@ export default function AssetForm() {
   const [status, setStatus] = useState([]);
   const [models, setModels] = useState([]);
 
+  const history = useHistory();
+
   useEffect(() => {
     getLocations().then((response) => {
       setLocations(response.data);
@@ -67,10 +71,16 @@ export default function AssetForm() {
         validationSchema={assetValidationSchema}
         onSubmit={(data, { setSubmitting }) => {
           setSubmitting(true);
-          console.log(data);
-          //asyn call
-
-          setSubmitting(false);
+          addAsset(data)
+            .then((response) => {
+              setSubmitting(false);
+              alert("Asset added successfully\n");
+              history.push("/assets");
+            })
+            .catch((error) => {
+              alert(error);
+              setSubmitting(false);
+            });
         }}
       >
         {({ values, isSubmitting, dirty, isValid }) => (
@@ -172,7 +182,7 @@ export default function AssetForm() {
             />
             <pre>{JSON.stringify(values, null, 2)}</pre>
             <Button
-              disabled={!isValid || !dirty}
+              disabled={!isValid || !dirty || isSubmitting}
               type='submit'
               color='secondary'
               variant='contained'
