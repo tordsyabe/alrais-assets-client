@@ -8,3 +8,7 @@ export const getAssets = () => {
 export const addAsset = (asset) => {
   return Axios.post(API_URL + "/assets", asset);
 };
+
+export const getAsset = (id) => {
+  return Axios.get(API_URL + "/assets/" + id);
+};

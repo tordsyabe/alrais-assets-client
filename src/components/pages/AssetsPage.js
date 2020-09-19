@@ -46,7 +46,9 @@ const AssetsPage = () => {
         </Grid>
 
         {assets.map((asset) => (
-          <div key={asset.uuid}>{asset.assetTag}</div>
+          <div key={asset.uuid}>
+            <Link to={`/assets/${asset.uuid}`}>{asset.name}</Link>
+          </div>
         ))}
       </Paper>
     </Fragment>
