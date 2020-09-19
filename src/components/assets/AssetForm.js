@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import { Paper, makeStyles, Typography, Button, Grid } from "@material-ui/core";
+
 import FormikTextField from "../formik-material-ui/FormikTextField";
+import FormikSelectField from "../formik-material-ui/FormikSelectField";
 
 import { assetValidationSchema } from "./../../utils/ValidationSchema";
 import { getLocations } from "../../services/LocationService";
-import FormikSelectField from "../formik-material-ui/FormikSelectField";
 import { getStatus } from "../../services/StatusService";
+import { getModels } from "../../services/ModelService";
 
 const initialValues = {
   name: "",
@@ -41,6 +43,7 @@ export default function AssetForm() {
 
   const [locations, setLocations] = useState([]);
   const [status, setStatus] = useState([]);
+  const [models, setModels] = useState([]);
 
   useEffect(() => {
     getLocations().then((response) => {
@@ -49,6 +52,10 @@ export default function AssetForm() {
 
     getStatus().then((response) => {
       setStatus(response.data);
+    });
+
+    getModels().then((response) => {
+      setModels(response.data);
     });
   }, []);
 
@@ -75,7 +82,6 @@ export default function AssetForm() {
               size='small'
               fullWidth
             />
-
             <FormikTextField
               name='serial'
               variant='outlined'
@@ -83,7 +89,6 @@ export default function AssetForm() {
               label='Serial'
               fullWidth
             />
-
             <FormikTextField
               name='name'
               variant='outlined'
@@ -122,7 +127,6 @@ export default function AssetForm() {
                 />
               </Grid>
             </Grid>
-
             <FormikTextField
               name='warranty'
               type='text'
@@ -131,7 +135,6 @@ export default function AssetForm() {
               label='Warranty (months)'
               fullWidth
             />
-
             <FormikSelectField
               name='locationId'
               type='select'
@@ -141,7 +144,6 @@ export default function AssetForm() {
               values={locations}
               fullWidth
             />
-
             <FormikSelectField
               name='statusId'
               type='select'
@@ -151,7 +153,15 @@ export default function AssetForm() {
               values={status}
               fullWidth
             />
-
+            <FormikSelectField
+              name='modelId'
+              type='select'
+              variant='outlined'
+              label='Model'
+              size='small'
+              values={models}
+              fullWidth
+            />
             <FormikTextField
               name='notes'
               type='text'
@@ -160,7 +170,6 @@ export default function AssetForm() {
               label='Notes'
               fullWidth
             />
-
             <pre>{JSON.stringify(values, null, 2)}</pre>
             <Button
               disabled={!isValid || !dirty}
