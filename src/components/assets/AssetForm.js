@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import {
   Paper,
   makeStyles,
@@ -7,11 +7,15 @@ import {
   Button,
   Grid,
   Select,
+  InputLabel,
+  FormControl,
+  MenuItem,
 } from "@material-ui/core";
 import FormikTextField from "../formik-material-ui/FormikTextField";
 
 import { assetValidationSchema } from "./../../utils/ValidationSchema";
 import { getLocations } from "../../services/LocationService";
+import FormikSelectField from "../formik-material-ui/FormikSelectField";
 
 const initialValues = {
   name: "",
@@ -48,8 +52,7 @@ export default function AssetForm() {
 
   useEffect(() => {
     getLocations().then((response) => {
-      setLocations(response);
-      console.log(response);
+      setLocations(response.data);
     });
   }, []);
 
@@ -133,6 +136,16 @@ export default function AssetForm() {
               fullWidth
             />
 
+            <FormikSelectField
+              name='locationId'
+              type='select'
+              variant='outlined'
+              label='Location'
+              size='small'
+              values={locations}
+              fullWidth
+            />
+
             <FormikTextField
               name='notes'
               type='text'
@@ -141,8 +154,6 @@ export default function AssetForm() {
               label='Notes'
               fullWidth
             />
-
-            <Field name='locationId' as={Select} type='select'></Field>
 
             <pre>{JSON.stringify(values, null, 2)}</pre>
             <Button
