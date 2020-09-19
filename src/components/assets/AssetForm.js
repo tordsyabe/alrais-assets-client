@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
-import {
-  Paper,
-  makeStyles,
-  Typography,
-  Button,
-  Grid,
-  Select,
-  InputLabel,
-  FormControl,
-  MenuItem,
-} from "@material-ui/core";
+import { Paper, makeStyles, Typography, Button, Grid } from "@material-ui/core";
 import FormikTextField from "../formik-material-ui/FormikTextField";
 
 import { assetValidationSchema } from "./../../utils/ValidationSchema";
 import { getLocations } from "../../services/LocationService";
 import FormikSelectField from "../formik-material-ui/FormikSelectField";
+import { getStatus } from "../../services/StatusService";
 
 const initialValues = {
   name: "",
@@ -49,10 +40,15 @@ export default function AssetForm() {
   const classes = useStyles();
 
   const [locations, setLocations] = useState([]);
+  const [status, setStatus] = useState([]);
 
   useEffect(() => {
     getLocations().then((response) => {
       setLocations(response.data);
+    });
+
+    getStatus().then((response) => {
+      setStatus(response.data);
     });
   }, []);
 
@@ -143,6 +139,16 @@ export default function AssetForm() {
               label='Location'
               size='small'
               values={locations}
+              fullWidth
+            />
+
+            <FormikSelectField
+              name='statusId'
+              type='select'
+              variant='outlined'
+              label='Status'
+              size='small'
+              values={status}
               fullWidth
             />
 
