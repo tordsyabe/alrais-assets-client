@@ -32,13 +32,13 @@ const AssetsPage = () => {
       <Paper square className={classes.root}>
         <Grid container>
           <Grid item className={classes.something}>
-            <Typography variant='h4' m={5}>
+            <Typography variant="h4" m={5}>
               ASSET LISTS
             </Typography>
           </Grid>
           <Grid item>
-            <Link to='/assets/new'>
-              <Button color='primary' variant='contained'>
+            <Link to="/assets/new">
+              <Button color="primary" variant="contained">
                 Add new asset
               </Button>
             </Link>
@@ -47,7 +47,9 @@ const AssetsPage = () => {
 
         {assets.map((asset) => (
           <div key={asset.uuid}>
-            <Link to={`/assets/${asset.uuid}`}>{asset.name}</Link>
+            <Link to={`/assets/${asset.uuid}`}>
+              <Typography variant="h5">{asset.modelResponse.name}</Typography>
+            </Link>
           </div>
         ))}
       </Paper>

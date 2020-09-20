@@ -29,7 +29,7 @@ export default function FormikSelectField({
     >
       <InputLabel>{label}</InputLabel>
       <Select {...field} label={label}>
-        <MenuItem value=''>
+        <MenuItem value="">
           <em>None</em>
         </MenuItem>
 

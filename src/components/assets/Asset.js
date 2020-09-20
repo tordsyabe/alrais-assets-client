@@ -1,8 +1,11 @@
-import { makeStyles, Paper, Typography } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
+import { Button, Grid, makeStyles, Paper, Typography } from "@material-ui/core";
+import React, { useState, useEffect, useRef } from "react";
 import { getAsset } from "../../services/AssetService";
 
 import { useParams } from "react-router-dom";
+import ReactToPrint from "react-to-print";
+
+import { useBarcode } from "@createnextapp/react-barcode";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,24 +16,91 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Asset() {
   const [asset, setAsset] = useState({});
+  const [model, setModel] = useState({});
+  const [manufacturer, setManufacturer] = useState({});
+  const [location, setLocation] = useState({});
+  const [status, setStatus] = useState({});
   const [fetching, setFetching] = useState(false);
+
+  const componentRef = useRef();
+
+  const { inputRef } = useBarcode({
+    value: asset.assetTag,
+    options: {
+      background: "#ffffff",
+      height: 50,
+      width: 1,
+      fontSize: "15",
+    },
+  });
 
   const params = useParams();
   const classes = useStyles();
+
+  const handlePrintBarcode = () => {
+    console.log("Printed me");
+  };
 
   useEffect(() => {
     setFetching(true);
     getAsset(params.id).then((response) => {
       setAsset(response.data);
       setFetching(false);
+      console.log(response.data);
+      setModel(response.data.modelResponse);
+      setManufacturer(response.data.modelResponse.manufacturerResponse);
+      setLocation(response.data.locationResponse);
+      setStatus(response.data.statusResponse);
     });
   }, [params.id]);
 
-  const { name, uuid } = asset;
+  const {
+    name,
+    uuid,
+    modelResponse,
+    assetTag,
+    serial,
+    locationResponse,
+  } = asset;
 
   return (
     <Paper square className={classes.root}>
-      <Typography variant='h4'>{name}</Typography>
+      <Grid container>
+        <Grid item xs={12} sm={12} lg={8}>
+          <Typography variant="h5">
+            {manufacturer.name + " " + model.name + " " + model.modelNumber}
+          </Typography>
+          <br />
+          <Typography>Serial No.: {serial}</Typography>
+          <Typography>Asset Tag: {assetTag}</Typography>
+          <Typography>Asset Name: {name}</Typography>
+          <Typography>Asset ID: {uuid}</Typography>
+          <Typography>Current Location: {location.name}</Typography>
+          <Typography>Status: {status.name}</Typography>
+          <br />
+
+          <div ref={componentRef}>
+            <svg ref={inputRef} />
+          </div>
+          <br />
+          <ReactToPrint
+            trigger={() => (
+              <Button
+                onClick={handlePrintBarcode}
+                variant="contained"
+                size="small"
+                color="secondary"
+              >
+                Print Asset Tag
+              </Button>
+            )}
+            content={() => componentRef.current}
+          ></ReactToPrint>
+        </Grid>
+        <Grid item xs={12} sm={12} lg={4}>
+          <img width="100%" height="100%" src="" />
+        </Grid>
+      </Grid>
     </Paper>
   );
 }
