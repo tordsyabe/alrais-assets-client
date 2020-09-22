@@ -7,6 +7,8 @@ import ReactToPrint from "react-to-print";
 
 import { useBarcode } from "@createnextapp/react-barcode";
 
+import hpImage from "../../images/hp.png";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(3),
@@ -78,7 +80,6 @@ export default function Asset() {
           <Typography>Current Location: {location.name}</Typography>
           <Typography>Status: {status.name}</Typography>
           <br />
-
           <div ref={componentRef}>
             <svg ref={inputRef} />
           </div>
@@ -98,7 +99,7 @@ export default function Asset() {
           ></ReactToPrint>
         </Grid>
         <Grid item xs={12} sm={12} lg={4}>
-          <img width="100%" height="100%" src="" />
+          <img width="100%" src={hpImage} />
         </Grid>
       </Grid>
     </Paper>

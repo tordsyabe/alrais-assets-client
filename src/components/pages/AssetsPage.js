@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiTypography-root": {
       marginBottom: theme.spacing(3),
     },
+    "& a": {
+      textDecoration: "none !important",
+    },
   },
   something: {
     flexGrow: 1,
