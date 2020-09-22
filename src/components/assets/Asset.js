@@ -30,7 +30,7 @@ export default function Asset() {
     value: asset.assetTag,
     options: {
       background: "#ffffff",
-      height: 50,
+      height: 25,
       width: 1,
       fontSize: "15",
     },
@@ -69,7 +69,7 @@ export default function Asset() {
     <Paper square className={classes.root}>
       <Grid container>
         <Grid item xs={12} sm={12} lg={8}>
-          <Typography variant="h5">
+          <Typography variant='h5'>
             {manufacturer.name + " " + model.name + " " + model.modelNumber}
           </Typography>
           <br />
@@ -81,16 +81,16 @@ export default function Asset() {
           <Typography>Status: {status.name}</Typography>
           <br />
           <div ref={componentRef}>
-            <svg ref={inputRef} />
+            <svg ref={inputRef}></svg>
           </div>
           <br />
           <ReactToPrint
             trigger={() => (
               <Button
                 onClick={handlePrintBarcode}
-                variant="contained"
-                size="small"
-                color="secondary"
+                variant='contained'
+                size='small'
+                color='primary'
               >
                 Print Asset Tag
               </Button>
@@ -99,7 +99,7 @@ export default function Asset() {
           ></ReactToPrint>
         </Grid>
         <Grid item xs={12} sm={12} lg={4}>
-          <img width="100%" src={hpImage} />
+          <img width='100%' src={hpImage} />
         </Grid>
       </Grid>
     </Paper>

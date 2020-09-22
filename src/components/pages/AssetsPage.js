@@ -1,7 +1,9 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, useContext, Fragment } from "react";
 import { Typography, Paper, makeStyles, Grid, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { getAssets } from "../../services/AssetService";
+import AssetContextProvider from "../../contexts/AssetContext";
+import { AssetContext } from "../../contexts/AssetContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,28 +22,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AssetsPage = () => {
-  const [assets, setAssets] = useState([]);
+  const { assets } = useContext(AssetContext);
 
   const classes = useStyles();
-
-  useEffect(() => {
-    getAssets().then((response) => {
-      setAssets(response.data);
-    });
-  }, []);
 
   return (
     <Fragment>
       <Paper square className={classes.root}>
         <Grid container>
           <Grid item className={classes.something}>
-            <Typography variant="h4" m={5}>
+            <Typography variant='h4' m={5}>
               ASSET LISTS
             </Typography>
           </Grid>
           <Grid item>
-            <Link to="/assets/new">
-              <Button color="primary" variant="contained">
+            <Link to='/assets/new'>
+              <Button color='primary' variant='contained'>
                 Add new asset
               </Button>
             </Link>
@@ -51,7 +47,7 @@ const AssetsPage = () => {
         {assets.map((asset) => (
           <div key={asset.uuid}>
             <Link to={`/assets/${asset.uuid}`}>
-              <Typography variant="h5">{asset.modelResponse.name}</Typography>
+              <Typography variant='h5'>{asset.modelResponse.name}</Typography>
             </Link>
           </div>
         ))}
