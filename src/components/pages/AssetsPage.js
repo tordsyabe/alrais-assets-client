@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { getAssets } from "../../services/AssetService";
 import AssetContextProvider from "../../contexts/AssetContext";
 import { AssetContext } from "../../contexts/AssetContext";
+import ModelContextProvider from "../../contexts/ModelContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,32 +28,30 @@ const AssetsPage = () => {
   const classes = useStyles();
 
   return (
-    <Fragment>
-      <Paper square className={classes.root}>
-        <Grid container>
-          <Grid item className={classes.something}>
-            <Typography variant='h4' m={5}>
-              ASSET LISTS
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Link to='/assets/new'>
-              <Button color='primary' variant='contained'>
-                Add new asset
-              </Button>
-            </Link>
-          </Grid>
+    <Paper square className={classes.root}>
+      <Grid container>
+        <Grid item className={classes.something}>
+          <Typography variant='h4' m={5}>
+            ASSET LISTS
+          </Typography>
         </Grid>
+        <Grid item>
+          <Link to='/assets/new'>
+            <Button color='primary' variant='contained'>
+              Add new asset
+            </Button>
+          </Link>
+        </Grid>
+      </Grid>
 
-        {assets.map((asset) => (
-          <div key={asset.uuid}>
-            <Link to={`/assets/${asset.uuid}`}>
-              <Typography variant='h5'>{asset.modelResponse.name}</Typography>
-            </Link>
-          </div>
-        ))}
-      </Paper>
-    </Fragment>
+      {assets.map((asset) => (
+        <div key={asset.uuid}>
+          <Link to={`/assets/${asset.uuid}`}>
+            <Typography variant='h5'>{asset.modelResponse.name}</Typography>
+          </Link>
+        </div>
+      ))}
+    </Paper>
   );
 };
 

@@ -5,17 +5,27 @@ import AssetForm from "./components/assets/AssetForm";
 import Asset from "./components/assets/Asset";
 import SideDrawer from "./components/ui/SideDrawer";
 import AssetsContextProvider from "./contexts/AssetContext";
+import ModelContextProvider from "./contexts/ModelContext";
+import { Grid } from "@material-ui/core";
 
 export default function Routes(props) {
   return (
     <React.Fragment>
       <AssetsContextProvider>
-        <SideDrawer />
-        <Switch>
-          <Route exact path='/assets' component={AssetsPage} />
-          <Route exact path='/assets/new' component={AssetForm} />
-          <Route path='/assets/:id' component={Asset} />
-        </Switch>
+        <Grid container spacing={0}>
+          <Grid item xs={1}>
+            <SideDrawer />
+          </Grid>
+          <Grid item xs={11}>
+            <Switch>
+              <Route exact path='/assets' component={AssetsPage} />
+              <ModelContextProvider>
+                <Route exact path='/assets/new' component={AssetForm} />
+              </ModelContextProvider>
+              <Route path='/assets/:id' component={Asset} />
+            </Switch>
+          </Grid>
+        </Grid>
       </AssetsContextProvider>
     </React.Fragment>
   );

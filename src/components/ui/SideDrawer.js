@@ -8,10 +8,10 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import clsx from "clsx";
-import BuildIcon from "@material-ui/icons/Build";
+import ComputerIcon from "@material-ui/icons/Computer";
 import { Link } from "react-router-dom";
 
-const drawerWidth = 240;
+const drawerWidth = "100%";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,7 +93,7 @@ export default function SideDrawer() {
 
   return (
     <Drawer
-      variant="permanent"
+      variant='permanent'
       className={clsx(classes.drawer, {
         [classes.drawerOpen]: open,
         [classes.drawerClose]: !open,
@@ -106,12 +106,21 @@ export default function SideDrawer() {
       }}
     >
       <List>
-        <Link to="/assets">
+        <Link to='/assets'>
           <ListItem button>
             <ListItemIcon>
-              <BuildIcon style={{ marginLeft: "5px" }} />
+              <ComputerIcon style={{ marginLeft: "5px" }} />
             </ListItemIcon>
-            <ListItemText primary="Assets" />
+            <ListItemText primary='Assets' />
+          </ListItem>
+        </Link>
+
+        <Link to='/assets'>
+          <ListItem button>
+            <ListItemIcon>
+              <ComputerIcon style={{ marginLeft: "5px" }} />
+            </ListItemIcon>
+            <ListItemText primary='Assets' />
           </ListItem>
         </Link>
       </List>

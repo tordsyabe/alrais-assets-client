@@ -1,6 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Formik, Form } from "formik";
-import { Paper, makeStyles, Typography, Button, Grid } from "@material-ui/core";
+import {
+  Paper,
+  makeStyles,
+  Typography,
+  Button,
+  Grid,
+  Hidden,
+} from "@material-ui/core";
 
 import FormikTextField from "../formik-material-ui/FormikTextField";
 import FormikSelectField from "../formik-material-ui/FormikSelectField";
@@ -11,6 +18,9 @@ import { getStatus } from "../../services/StatusService";
 import { getModels } from "../../services/ModelService";
 import { addAsset } from "../../services/AssetService";
 import { Redirect, useHistory } from "react-router-dom";
+import ModelContextProvider, {
+  ModelContext,
+} from "../../contexts/ModelContext";
 
 const initialValues = {
   name: "",
@@ -45,7 +55,7 @@ export default function AssetForm() {
 
   const [locations, setLocations] = useState([]);
   const [status, setStatus] = useState([]);
-  const [models, setModels] = useState([]);
+  const { models } = useContext(ModelContext);
 
   const history = useHistory();
 
@@ -56,11 +66,6 @@ export default function AssetForm() {
 
     getStatus().then((response) => {
       setStatus(response.data);
-    });
-
-    getModels().then((response) => {
-      setModels(response.data);
-      console.log(response.data);
     });
   }, []);
 
@@ -92,6 +97,7 @@ export default function AssetForm() {
               variant='outlined'
               size='small'
               fullWidth
+              required
             />
             <FormikTextField
               name='serial'
@@ -99,6 +105,7 @@ export default function AssetForm() {
               size='small'
               label='Serial'
               fullWidth
+              required
             />
             <FormikTextField
               name='name'
@@ -106,46 +113,51 @@ export default function AssetForm() {
               size='small'
               label='Asset Name'
               fullWidth
+              required
             />
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={12} md={4}>
-                <FormikTextField
-                  name='purchaseDate'
-                  variant='outlined'
-                  label='Purchase Date'
-                  type='date'
-                  size='small'
-                  fullWidth
-                />
+            <Hidden xsUp>
+              <Grid container spacing={3}>
+                <Grid item xs={12} sm={12} md={4}>
+                  <FormikTextField
+                    name='purchaseDate'
+                    variant='outlined'
+                    label='Purchase Date'
+                    type='date'
+                    size='small'
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12} md={4}>
+                  <FormikTextField
+                    name='purchaseNumber'
+                    variant='outlined'
+                    size='small'
+                    label='Purchase Number'
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12} md={4}>
+                  <FormikTextField
+                    name='purchaseCost'
+                    type='text'
+                    variant='outlined'
+                    size='small'
+                    label='Purchase Cost'
+                    fullWidth
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12} sm={12} md={4}>
-                <FormikTextField
-                  name='purchaseNumber'
-                  variant='outlined'
-                  size='small'
-                  label='Purchase Number'
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={12} md={4}>
-                <FormikTextField
-                  name='purchaseCost'
-                  type='text'
-                  variant='outlined'
-                  size='small'
-                  label='Purchase Cost'
-                  fullWidth
-                />
-              </Grid>
-            </Grid>
-            <FormikTextField
-              name='warranty'
-              type='text'
-              variant='outlined'
-              size='small'
-              label='Warranty (months)'
-              fullWidth
-            />
+
+              <FormikTextField
+                name='warranty'
+                type='text'
+                variant='outlined'
+                size='small'
+                label='Warranty (months)'
+                fullWidth
+              />
+            </Hidden>
+
             <FormikSelectField
               name='locationId'
               type='select'

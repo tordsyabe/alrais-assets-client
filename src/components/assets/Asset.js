@@ -8,6 +8,7 @@ import ReactToPrint from "react-to-print";
 import { useBarcode } from "@createnextapp/react-barcode";
 
 import hpImage from "../../images/hp.png";
+import { ModelContext } from "../../contexts/ModelContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -99,7 +100,7 @@ export default function Asset() {
           ></ReactToPrint>
         </Grid>
         <Grid item xs={12} sm={12} lg={4}>
-          <img width='100%' src={hpImage} />
+          <img width='100%' src={hpImage} alt={asset.name} />
         </Grid>
       </Grid>
     </Paper>
