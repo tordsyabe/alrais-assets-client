@@ -12,6 +12,8 @@ import { Field, Form, Formik } from "formik";
 import { locationValidationSchema } from "../../utils/ValidationSchema";
 import { makeStyles } from "@material-ui/core";
 import { addLocation } from "../../services/LocationService";
+import { LocationContext } from "../../contexts/LocationContext";
+import { locationActionType } from "../../utils/constants";
 
 const initialValues = {
   name: "",
@@ -29,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LocationFormDialog({ title, dialogContent, uuid }) {
   const { handleDialogClose, open } = useContext(DialogContext);
+  const { dispatch } = useContext(LocationContext);
 
   const classes = useStyles();
 
@@ -45,7 +48,11 @@ export default function LocationFormDialog({ title, dialogContent, uuid }) {
           validationSchema={locationValidationSchema}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
-            addLocation(data).then(() => {
+            addLocation(data).then((response) => {
+              dispatch({
+                type: locationActionType.ADD_LOCATION,
+                payload: response.data,
+              });
               handleDialogClose();
               setSubmitting(false);
             });
