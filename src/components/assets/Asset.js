@@ -8,7 +8,6 @@ import ReactToPrint from "react-to-print";
 import { useBarcode } from "@createnextapp/react-barcode";
 
 import hpImage from "../../images/hp.png";
-import { ModelContext } from "../../contexts/ModelContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,14 +56,7 @@ export default function Asset() {
     });
   }, [params.id]);
 
-  const {
-    name,
-    uuid,
-    modelResponse,
-    assetTag,
-    serial,
-    locationResponse,
-  } = asset;
+  const { name, uuid, assetTag, serial } = asset;
 
   return (
     <Paper square className={classes.root}>

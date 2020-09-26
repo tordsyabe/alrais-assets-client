@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useReducer } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import { locationReducer } from "../components/reducers/LocationReducer";
 import { getLocations } from "../services/LocationService";
 

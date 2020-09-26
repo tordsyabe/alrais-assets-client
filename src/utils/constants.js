@@ -4,3 +4,8 @@ export const locationActionType = {
   ADD_LOCATION: "ADD_LOCATION",
   SET_LOCATIONS: "SET_LOCATIONS",
 };
+
+export const statusActionType = {
+  ADD_STATUS: "ADD_STATUS",
+  SET_STATUS: "SET_STATUS",
+};

@@ -7,8 +7,12 @@ import SideDrawer from "./components/ui/SideDrawer";
 import AssetsContextProvider from "./contexts/AssetContext";
 import ModelContextProvider from "./contexts/ModelContext";
 import { Grid } from "@material-ui/core";
-import DialogContextProvider from "./contexts/DialogContext";
+import LocationDialogContextProvider from "./contexts/LocationDialogContext";
 import LocationContextProvider from "./contexts/LocationContext";
+import StatusDialogContextProvider, {
+  StatusDialogContext,
+} from "./contexts/StatusDialogContext";
+import StatusContextProvider from "./contexts/StatusContext";
 
 export default function Routes(props) {
   return (
@@ -23,9 +27,13 @@ export default function Routes(props) {
               <Route exact path='/assets' component={AssetsPage} />
               <ModelContextProvider>
                 <LocationContextProvider>
-                  <DialogContextProvider>
-                    <Route exact path='/assets/new' component={AssetForm} />
-                  </DialogContextProvider>
+                  <LocationDialogContextProvider>
+                    <StatusContextProvider>
+                      <StatusDialogContextProvider>
+                        <Route exact path='/assets/new' component={AssetForm} />
+                      </StatusDialogContextProvider>
+                    </StatusContextProvider>
+                  </LocationDialogContextProvider>
                 </LocationContextProvider>
               </ModelContextProvider>
               <Route path='/assets/:id' component={Asset} />

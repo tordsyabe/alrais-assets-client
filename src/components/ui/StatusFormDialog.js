@@ -5,22 +5,20 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import {
-  DialogContext,
-  LocationDialogContext,
-} from "../../contexts/LocationDialogContext";
+import { StatusDialogContext } from "../../contexts/StatusDialogContext";
 import FormikTextField from "../formik-material-ui/FormikTextField";
 import { Field, Form, Formik } from "formik";
-import { locationValidationSchema } from "../../utils/ValidationSchema";
+import { statusValidationSchema } from "../../utils/ValidationSchema";
 import { makeStyles } from "@material-ui/core";
 import { addLocation } from "../../services/LocationService";
 import { LocationContext } from "../../contexts/LocationContext";
-import { locationActionType } from "../../utils/constants";
+import { locationActionType, statusActionType } from "../../utils/constants";
+import { addStatus } from "../../services/StatusService";
 
 const initialValues = {
   name: "",
-  address: "",
-  city: "",
+  type: "",
+  notes: "",
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -31,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LocationFormDialog({ title, dialogContent, uuid }) {
-  const { handleCloseLocationForm, open } = useContext(LocationDialogContext);
+export default function StatusFormDialog({ title, dialogContent, uuid }) {
+  const { handleCloseStatusForm, open } = useContext(StatusDialogContext);
   const { dispatch } = useContext(LocationContext);
 
   const classes = useStyles();
@@ -41,21 +39,21 @@ export default function LocationFormDialog({ title, dialogContent, uuid }) {
     <div>
       <Dialog
         open={open}
-        onClose={handleCloseLocationForm}
+        onClose={handleCloseStatusForm}
         aria-labelledby='form-dialog-title'
         className={classes.root}
       >
         <Formik
           initialValues={{ ...initialValues, uuid: uuid }}
-          validationSchema={locationValidationSchema}
+          validationSchema={statusValidationSchema}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
-            addLocation(data).then((response) => {
+            addStatus(data).then((response) => {
               dispatch({
-                type: locationActionType.ADD_LOCATION,
+                type: statusActionType.ADD_STATUS,
                 payload: response.data,
               });
-              handleCloseLocationForm();
+              handleCloseStatusForm();
               setSubmitting(false);
             });
           }}
@@ -77,8 +75,8 @@ export default function LocationFormDialog({ title, dialogContent, uuid }) {
                 />
 
                 <FormikTextField
-                  name='address'
-                  label='Address'
+                  name='type'
+                  label='Type'
                   variant='outlined'
                   size='small'
                   fullWidth
@@ -86,17 +84,16 @@ export default function LocationFormDialog({ title, dialogContent, uuid }) {
                 />
 
                 <FormikTextField
-                  name='city'
-                  label='City'
+                  name='notes'
+                  label='Notes'
                   variant='outlined'
                   size='small'
                   fullWidth
-                  required
                 />
               </DialogContent>
               <DialogActions>
                 <Button
-                  onClick={handleCloseLocationForm}
+                  onClick={handleCloseStatusForm}
                   color='secondary'
                   variant='contained'
                 >

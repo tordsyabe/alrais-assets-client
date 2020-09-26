@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useContext, Fragment } from "react";
+import React, { useContext } from "react";
 import { Typography, Paper, makeStyles, Grid, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { getAssets } from "../../services/AssetService";
-import AssetContextProvider from "../../contexts/AssetContext";
 import { AssetContext } from "../../contexts/AssetContext";
-import ModelContextProvider from "../../contexts/ModelContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {

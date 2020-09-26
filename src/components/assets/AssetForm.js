@@ -13,14 +13,16 @@ import FormikTextField from "../formik-material-ui/FormikTextField";
 import FormikSelectField from "../formik-material-ui/FormikSelectField";
 
 import { assetValidationSchema } from "./../../utils/ValidationSchema";
-import { getLocations } from "../../services/LocationService";
 import { getStatus } from "../../services/StatusService";
 import { addAsset } from "../../services/AssetService";
 import { useHistory } from "react-router-dom";
 import { ModelContext } from "../../contexts/ModelContext";
-import { DialogContext } from "../../contexts/DialogContext";
+import { LocationDialogContext } from "../../contexts/LocationDialogContext";
 import LocationFormDialog from "../ui/LocationFormDialog";
 import { LocationContext } from "../../contexts/LocationContext";
+import { StatusDialogContext } from "../../contexts/StatusDialogContext";
+import StatusFormDialog from "../ui/StatusFormDialog";
+import { StatusContext } from "../../contexts/StatusContext";
 
 const initialValues = {
   name: "",
@@ -62,19 +64,14 @@ const useStyles = makeStyles((theme) => ({
 export default function AssetForm() {
   const classes = useStyles();
 
-  const [status, setStatus] = useState([]);
   const { models } = useContext(ModelContext);
   const { locations } = useContext(LocationContext);
+  const { status } = useContext(StatusContext);
 
-  const { handleDialogOpen } = useContext(DialogContext);
+  const { handleOpenLocationForm } = useContext(LocationDialogContext);
+  const { handleOpenStatusForm } = useContext(StatusDialogContext);
 
   const history = useHistory();
-
-  useEffect(() => {
-    getStatus().then((response) => {
-      setStatus(response.data);
-    });
-  }, []);
 
   return (
     <Fragment>
@@ -182,22 +179,36 @@ export default function AssetForm() {
                   <Button
                     variant='contained'
                     color='secondary'
-                    onClick={handleDialogOpen}
+                    onClick={handleOpenLocationForm}
                   >
                     New
                   </Button>
                 </Grid>
               </Grid>
 
-              <FormikSelectField
-                name='statusId'
-                type='select'
-                variant='outlined'
-                label='Status'
-                size='small'
-                values={status}
-                fullWidth
-              />
+              <Grid container className={classes.inline} spacing={3}>
+                <Grid item xs={10}>
+                  <FormikSelectField
+                    name='statusId'
+                    type='select'
+                    variant='outlined'
+                    label='Status'
+                    size='small'
+                    values={status}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={2}>
+                  <Button
+                    variant='contained'
+                    color='secondary'
+                    onClick={handleOpenStatusForm}
+                  >
+                    New
+                  </Button>
+                </Grid>
+              </Grid>
+
               <FormikSelectField
                 name='modelId'
                 type='select'
@@ -231,6 +242,12 @@ export default function AssetForm() {
       <LocationFormDialog
         title='Location'
         dialogContent='Create new location'
+        uuid={null}
+      />
+
+      <StatusFormDialog
+        title='Status'
+        dialogContent='Create new status'
         uuid={null}
       />
     </Fragment>

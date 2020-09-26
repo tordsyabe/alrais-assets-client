@@ -14,3 +14,7 @@ export const locationValidationSchema = yup.object({
   address: yup.string().required("Location address is required"),
   city: yup.string().required("Location city is required"),
 });
+export const statusValidationSchema = yup.object({
+  name: yup.string().required("Status name is required"),
+  type: yup.string().required("Status type is required"),
+});
