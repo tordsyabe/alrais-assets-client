@@ -115,14 +115,14 @@ export default function SideDrawer() {
           </ListItem>
         </Link>
 
-        <Link to='/assets'>
+        {/* <Link to='/assets'>
           <ListItem button>
             <ListItemIcon>
               <ComputerIcon style={{ marginLeft: "5px" }} />
             </ListItemIcon>
             <ListItemText primary='Assets' />
           </ListItem>
-        </Link>
+        </Link> */}
       </List>
       {/* <IconButton
         color="inherit"

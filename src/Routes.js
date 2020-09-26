@@ -7,6 +7,7 @@ import SideDrawer from "./components/ui/SideDrawer";
 import AssetsContextProvider from "./contexts/AssetContext";
 import ModelContextProvider from "./contexts/ModelContext";
 import { Grid } from "@material-ui/core";
+import DialogContextProvider from "./contexts/DialogContext";
 
 export default function Routes(props) {
   return (
@@ -20,7 +21,9 @@ export default function Routes(props) {
             <Switch>
               <Route exact path='/assets' component={AssetsPage} />
               <ModelContextProvider>
-                <Route exact path='/assets/new' component={AssetForm} />
+                <DialogContextProvider>
+                  <Route exact path='/assets/new' component={AssetForm} />
+                </DialogContextProvider>
               </ModelContextProvider>
               <Route path='/assets/:id' component={Asset} />
             </Switch>

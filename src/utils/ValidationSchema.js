@@ -8,3 +8,9 @@ export const assetValidationSchema = yup.object({
   statusId: yup.string().required("Status is required"),
   modelId: yup.string().required(),
 });
+
+export const locationValidationSchema = yup.object({
+  name: yup.string().required("Location name is required"),
+  address: yup.string().required("Location address is required"),
+  city: yup.string().required("Location city is required"),
+});
