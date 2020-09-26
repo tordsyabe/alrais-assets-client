@@ -8,6 +8,7 @@ import AssetsContextProvider from "./contexts/AssetContext";
 import ModelContextProvider from "./contexts/ModelContext";
 import { Grid } from "@material-ui/core";
 import DialogContextProvider from "./contexts/DialogContext";
+import LocationContextProvider from "./contexts/LocationContext";
 
 export default function Routes(props) {
   return (
@@ -21,9 +22,11 @@ export default function Routes(props) {
             <Switch>
               <Route exact path='/assets' component={AssetsPage} />
               <ModelContextProvider>
-                <DialogContextProvider>
-                  <Route exact path='/assets/new' component={AssetForm} />
-                </DialogContextProvider>
+                <LocationContextProvider>
+                  <DialogContextProvider>
+                    <Route exact path='/assets/new' component={AssetForm} />
+                  </DialogContextProvider>
+                </LocationContextProvider>
               </ModelContextProvider>
               <Route path='/assets/:id' component={Asset} />
             </Switch>

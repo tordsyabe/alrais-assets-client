@@ -20,6 +20,7 @@ import { useHistory } from "react-router-dom";
 import { ModelContext } from "../../contexts/ModelContext";
 import { DialogContext } from "../../contexts/DialogContext";
 import LocationFormDialog from "../ui/LocationFormDialog";
+import { LocationContext } from "../../contexts/LocationContext";
 
 const initialValues = {
   name: "",
@@ -61,19 +62,15 @@ const useStyles = makeStyles((theme) => ({
 export default function AssetForm() {
   const classes = useStyles();
 
-  const [locations, setLocations] = useState([]);
   const [status, setStatus] = useState([]);
   const { models } = useContext(ModelContext);
+  const { locations } = useContext(LocationContext);
 
   const { handleDialogOpen } = useContext(DialogContext);
 
   const history = useHistory();
 
   useEffect(() => {
-    getLocations().then((response) => {
-      setLocations(response.data);
-    });
-
     getStatus().then((response) => {
       setStatus(response.data);
     });
@@ -178,6 +175,7 @@ export default function AssetForm() {
                     size='small'
                     values={locations}
                     fullWidth
+                    required
                   />
                 </Grid>
                 <Grid item xs={2}>
