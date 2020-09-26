@@ -23,6 +23,8 @@ import { LocationContext } from "../../contexts/LocationContext";
 import { StatusDialogContext } from "../../contexts/StatusDialogContext";
 import StatusFormDialog from "../ui/StatusFormDialog";
 import { StatusContext } from "../../contexts/StatusContext";
+import { AssetContext } from "../../contexts/AssetContext";
+import { assetActionType } from "../../utils/constants";
 
 const initialValues = {
   name: "",
@@ -47,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(3),
     },
     "& .MuiFormControl-root": {
+      marginTop: theme.spacing(1),
+    },
+    "& .MuiButtonBase-root": {
       marginTop: theme.spacing(3),
     },
   },
@@ -56,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     "& .MuiButtonBase-root": {
-      marginTop: theme.spacing(3),
+      marginTop: theme.spacing(1),
     },
   },
 }));
@@ -67,6 +72,7 @@ export default function AssetForm() {
   const { models } = useContext(ModelContext);
   const { locations } = useContext(LocationContext);
   const { status } = useContext(StatusContext);
+  const { dispatch } = useContext(AssetContext);
 
   const { handleOpenLocationForm } = useContext(LocationDialogContext);
   const { handleOpenStatusForm } = useContext(StatusDialogContext);
@@ -84,6 +90,10 @@ export default function AssetForm() {
             setSubmitting(true);
             addAsset(data)
               .then((response) => {
+                dispatch({
+                  type: assetActionType.ADD_ASSET,
+                  payload: response.data,
+                });
                 setSubmitting(false);
                 alert("Asset added successfully\n");
                 history.push("/assets");
@@ -226,7 +236,6 @@ export default function AssetForm() {
                 label='Notes'
                 fullWidth
               />
-              <pre>{JSON.stringify(values, null, 2)}</pre>
               <Button
                 disabled={!isValid || !dirty || isSubmitting}
                 type='submit'

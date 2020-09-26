@@ -1,20 +1,21 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
+import { assetReducer } from "../components/reducers/AssetReducer";
 import { getAssets } from "../services/AssetService";
+import { assetActionType } from "../utils/constants";
 
 export const AssetContext = createContext();
 
 export default function AssetContextProvider(props) {
-  const [assets, setAssets] = useState([]);
+  const [assets, dispatch] = useReducer(assetReducer, []);
 
   useEffect(() => {
     getAssets().then((response) => {
-      setAssets(response.data);
-      console.log(response.data);
+      dispatch({ type: assetActionType.SET_ASSETS, payload: response.data });
     });
-  }, []);
+  }, [assets]);
 
   return (
-    <AssetContext.Provider value={{ assets }}>
+    <AssetContext.Provider value={{ assets, dispatch }}>
       {props.children}
     </AssetContext.Provider>
   );

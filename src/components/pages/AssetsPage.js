@@ -44,7 +44,7 @@ const AssetsPage = () => {
       {assets.map((asset) => (
         <div key={asset.uuid}>
           <Link to={`/assets/${asset.uuid}`}>
-            <Typography variant='h5'>{asset.modelResponse.name}</Typography>
+            <Typography variant='h5'>{asset.name}</Typography>
           </Link>
         </div>
       ))}

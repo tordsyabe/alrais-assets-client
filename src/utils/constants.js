@@ -9,3 +9,8 @@ export const statusActionType = {
   ADD_STATUS: "ADD_STATUS",
   SET_STATUS: "SET_STATUS",
 };
+
+export const assetActionType = {
+  ADD_ASSET: "ADD_ASSET",
+  SET_ASSETS: "SET_ASSETS",
+};

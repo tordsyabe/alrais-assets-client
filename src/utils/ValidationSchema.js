@@ -6,7 +6,7 @@ export const assetValidationSchema = yup.object({
   serial: yup.string().required("Serial is required"),
   locationId: yup.string().required("Location is required"),
   statusId: yup.string().required("Status is required"),
-  modelId: yup.string().required(),
+  modelId: yup.string().required("Model is required"),
 });
 
 export const locationValidationSchema = yup.object({
