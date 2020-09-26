@@ -14,6 +14,7 @@ import { addLocation } from "../../services/LocationService";
 import { LocationContext } from "../../contexts/LocationContext";
 import { locationActionType, statusActionType } from "../../utils/constants";
 import { addStatus } from "../../services/StatusService";
+import { StatusContext } from "../../contexts/StatusContext";
 
 const initialValues = {
   name: "",
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StatusFormDialog({ title, dialogContent, uuid }) {
   const { handleCloseStatusForm, open } = useContext(StatusDialogContext);
-  const { dispatch } = useContext(LocationContext);
+  const { dispatch } = useContext(StatusContext);
 
   const classes = useStyles();
 
