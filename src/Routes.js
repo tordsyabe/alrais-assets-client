@@ -27,7 +27,7 @@ export default function Routes(props) {
               <Route exact path="/assets/" component={AssetsPage} />
               <Route exact path="/assets/new" component={AssetForm} />
 
-              <Route path="assets/:id" component={Asset} />
+              <Route path="/assets/:id" component={Asset} />
             </Switch>
           </Grid>
         </Grid>

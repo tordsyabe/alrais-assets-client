@@ -5,7 +5,7 @@ import { getAsset } from "../../services/AssetService";
 import { useParams } from "react-router-dom";
 import ReactToPrint from "react-to-print";
 
-import { useBarcode } from "@createnextapp/react-barcode";
+import { useBarcode } from "react-barcodes";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,15 +16,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Asset() {
   const componentRef = useRef();
+
+  const [asset, setAsset] = useState({});
   console.log("FROM ASSET");
 
   const { inputRef } = useBarcode({
-    value: "Wait",
+    value: asset.assetTag,
     options: {
       background: "#ffffff",
-      height: 25,
+      height: 40,
       width: 1,
       fontSize: "15",
+      format: "CODE128A",
     },
   });
 
@@ -36,27 +39,37 @@ export default function Asset() {
   };
 
   useEffect(() => {
-    getAsset(params.id).then((response) => console.log(response.data));
+    getAsset(params.id).then((response) => setAsset(response.data));
     console.log(params.id);
   }, []);
 
   return (
     <Paper square className={classes.root}>
       <div>ASSET</div>
-      {/* <Grid container>
+      <Grid container>
         <Grid item xs={12} sm={12} lg={8}>
-          <Typography variant="h5">
+          {/* <Typography variant="h5">
             {manufacturer.name + " " + model.name + " " + model.modelNumber}
-          </Typography>
+          </Typography> */}
           <br />
-          <Typography>Serial No.: {serial}</Typography>
+          {/* <Typography>Serial No.: {serial}</Typography>
           <Typography>Asset Tag: {assetTag}</Typography>
           <Typography>Asset Name: {name}</Typography>
           <Typography>Asset ID: {uuid}</Typography>
           <Typography>Current Location: {location.name}</Typography>
-          <Typography>Status: {status.name}</Typography>
+          <Typography>Status: {status.name}</Typography> */}
           <br />
-          <div ref={componentRef}>
+          <div
+            ref={componentRef}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Typography style={{ color: "black" }}>Property of</Typography>
+            <Typography style={{ color: "black" }}>
+              ALRAIS ENT. GROUP
+            </Typography>
             <svg ref={inputRef}></svg>
           </div>
           <br />
@@ -75,9 +88,9 @@ export default function Asset() {
           ></ReactToPrint>
         </Grid>
         <Grid item xs={12} sm={12} lg={4}>
-          <img width="100%" src={hpImage} alt={asset.name} />
+          <img width="100%" src="" alt="" />
         </Grid>
-      </Grid> */}
+      </Grid>
     </Paper>
   );
 }
