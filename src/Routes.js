@@ -24,19 +24,10 @@ export default function Routes(props) {
           </Grid>
           <Grid item xs={11}>
             <Switch>
-              <Route exact path='/assets' component={AssetsPage} />
-              <ModelContextProvider>
-                <LocationContextProvider>
-                  <LocationDialogContextProvider>
-                    <StatusContextProvider>
-                      <StatusDialogContextProvider>
-                        <Route exact path='/assets/new' component={AssetForm} />
-                      </StatusDialogContextProvider>
-                    </StatusContextProvider>
-                  </LocationDialogContextProvider>
-                </LocationContextProvider>
-              </ModelContextProvider>
-              <Route path='/assets/:id' component={Asset} />
+              <Route exact path="/assets/" component={AssetsPage} />
+              <Route exact path="/assets/new" component={AssetForm} />
+
+              <Route path="assets/:id" component={Asset} />
             </Switch>
           </Grid>
         </Grid>

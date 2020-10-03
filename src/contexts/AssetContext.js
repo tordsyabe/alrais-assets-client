@@ -12,7 +12,7 @@ export default function AssetContextProvider(props) {
     getAssets().then((response) => {
       dispatch({ type: assetActionType.SET_ASSETS, payload: response.data });
     });
-  }, [assets]);
+  }, []);
 
   return (
     <AssetContext.Provider value={{ assets, dispatch }}>

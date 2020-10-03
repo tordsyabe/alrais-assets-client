@@ -13,4 +13,5 @@ export const statusActionType = {
 export const assetActionType = {
   ADD_ASSET: "ADD_ASSET",
   SET_ASSETS: "SET_ASSETS",
+  GET_ASSET: "GET_ASSET",
 };

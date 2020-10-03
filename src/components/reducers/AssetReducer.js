@@ -7,7 +7,7 @@ export const assetReducer = (state, action) => {
     case assetActionType.SET_ASSETS:
       return action.payload;
     case assetActionType.GET_ASSET:
-      return [...state].filter((asset) => asset.uuid === action.payload.id);
+      return [...state].filter((asset) => asset.uuid === action.payload);
     default:
       return state;
   }

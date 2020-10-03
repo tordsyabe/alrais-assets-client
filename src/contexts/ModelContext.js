@@ -10,7 +10,6 @@ export default function ModelContextProvider(props) {
   useEffect(() => {
     getModels().then((response) => {
       setModels(response.data);
-      console.log(response.data);
     });
   }, []);
 

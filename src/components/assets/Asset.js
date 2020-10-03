@@ -1,13 +1,11 @@
 import { Button, Grid, makeStyles, Paper, Typography } from "@material-ui/core";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { getAsset } from "../../services/AssetService";
 
 import { useParams } from "react-router-dom";
 import ReactToPrint from "react-to-print";
 
 import { useBarcode } from "@createnextapp/react-barcode";
-
-import hpImage from "../../images/hp.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,17 +15,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Asset() {
-  const [asset, setAsset] = useState({});
-  const [model, setModel] = useState({});
-  const [manufacturer, setManufacturer] = useState({});
-  const [location, setLocation] = useState({});
-  const [status, setStatus] = useState({});
-  const [fetching, setFetching] = useState(false);
-
   const componentRef = useRef();
+  console.log("FROM ASSET");
 
   const { inputRef } = useBarcode({
-    value: asset.assetTag,
+    value: "Wait",
     options: {
       background: "#ffffff",
       height: 25,
@@ -44,25 +36,16 @@ export default function Asset() {
   };
 
   useEffect(() => {
-    setFetching(true);
-    getAsset(params.id).then((response) => {
-      setAsset(response.data);
-      setFetching(false);
-      console.log(response.data);
-      setModel(response.data.modelResponse);
-      setManufacturer(response.data.modelResponse.manufacturerResponse);
-      setLocation(response.data.locationResponse);
-      setStatus(response.data.statusResponse);
-    });
-  }, [params.id]);
-
-  const { name, uuid, assetTag, serial } = asset;
+    getAsset(params.id).then((response) => console.log(response.data));
+    console.log(params.id);
+  }, []);
 
   return (
     <Paper square className={classes.root}>
-      <Grid container>
+      <div>ASSET</div>
+      {/* <Grid container>
         <Grid item xs={12} sm={12} lg={8}>
-          <Typography variant='h5'>
+          <Typography variant="h5">
             {manufacturer.name + " " + model.name + " " + model.modelNumber}
           </Typography>
           <br />
@@ -81,9 +64,9 @@ export default function Asset() {
             trigger={() => (
               <Button
                 onClick={handlePrintBarcode}
-                variant='contained'
-                size='small'
-                color='primary'
+                variant="contained"
+                size="small"
+                color="primary"
               >
                 Print Asset Tag
               </Button>
@@ -92,9 +75,9 @@ export default function Asset() {
           ></ReactToPrint>
         </Grid>
         <Grid item xs={12} sm={12} lg={4}>
-          <img width='100%' src={hpImage} alt={asset.name} />
+          <img width="100%" src={hpImage} alt={asset.name} />
         </Grid>
-      </Grid>
+      </Grid> */}
     </Paper>
   );
 }

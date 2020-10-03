@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AssetsPage = () => {
   const { assets } = useContext(AssetContext);
+  console.log("FROM ASSETS PAGE");
 
   const classes = useStyles();
 
@@ -28,13 +29,13 @@ const AssetsPage = () => {
     <Paper square className={classes.root}>
       <Grid container>
         <Grid item className={classes.something}>
-          <Typography variant='h4' m={5}>
+          <Typography variant="h4" m={5}>
             ASSET LISTS
           </Typography>
         </Grid>
         <Grid item>
-          <Link to='/assets/new'>
-            <Button color='primary' variant='contained'>
+          <Link to="/assets/new">
+            <Button color="primary" variant="contained">
               Add new asset
             </Button>
           </Link>
@@ -44,7 +45,7 @@ const AssetsPage = () => {
       {assets.map((asset) => (
         <div key={asset.uuid}>
           <Link to={`/assets/${asset.uuid}`}>
-            <Typography variant='h5'>{asset.name}</Typography>
+            <Typography variant="h5">{asset.name}</Typography>
           </Link>
         </div>
       ))}
